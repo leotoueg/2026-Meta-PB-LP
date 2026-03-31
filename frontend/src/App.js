@@ -411,15 +411,7 @@ const LandingPage = () => {
           style={{ backgroundImage: `url(${HERO_IMAGE})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/90 to-brand-blue/70" />
-        <div className="absolute inset-0 flex flex-col justify-between p-8 lg:p-12">
-          <div>
-            <img 
-              src={LOGO_URL} 
-              alt="Apex Bath Remodeling & Pros" 
-              className="h-24 lg:h-32 w-auto object-contain"
-              data-testid="company-logo"
-            />
-          </div>
+        <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-12">
           <div className="space-y-4">
             <h1 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
               Transform Your Bathroom Into a<br />
@@ -449,7 +441,16 @@ const LandingPage = () => {
       </div>
 
       {/* Right Side - Quiz */}
-      <div className="flex items-center justify-center p-4 md:p-8 lg:p-12">
+      <div className="flex flex-col items-center justify-center p-4 md:p-8 lg:p-12">
+        {/* Logo above quiz */}
+        <div className="mb-6 hidden md:block">
+          <img 
+            src={LOGO_URL} 
+            alt="Apex Bath Remodeling & Pros" 
+            className="h-20 lg:h-24 w-auto object-contain"
+            data-testid="company-logo"
+          />
+        </div>
         <div className="bg-white shadow-2xl shadow-slate-200/50 border border-slate-100 rounded-xl overflow-hidden relative w-full max-w-xl">
           {/* Progress Bar */}
           {currentStep <= 5 && (
