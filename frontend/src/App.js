@@ -326,8 +326,8 @@ const LandingPage = () => {
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">Book Your Free Estimate</h2>
-              <p className="text-slate-500">Select a date and time that works for you</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">Wait! You're almost done</h2>
+              <p className="text-slate-500">Select a date and time for your free estimate</p>
             </div>
             <div className="flex flex-col items-center space-y-6">
               <Calendar
@@ -491,7 +491,7 @@ const LandingPage = () => {
                     "Processing..."
                   ) : currentStep === 4 ? (
                     <>
-                      Submit & Book Appointment
+                      Submit
                       <ChevronRight className="w-5 h-5 ml-2" />
                     </>
                   ) : currentStep === 5 ? (
