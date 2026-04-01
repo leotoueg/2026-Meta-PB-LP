@@ -460,13 +460,17 @@ const LandingPage = () => {
       </div>
 
       {/* Mobile Header */}
-      <div className="md:hidden bg-brand-blue p-4">
+      <div className="md:hidden bg-white border-b border-slate-200 p-4">
         <img 
           src={LOGO_URL} 
           alt="Apex Bath Remodeling & Pros" 
           className="h-16 w-auto object-contain mx-auto"
           data-testid="company-logo-mobile"
         />
+        {/* Mobile Offer Banner */}
+        <div className="mt-3 bg-brand-orange text-white text-center py-2 px-3 rounded-lg text-sm font-bold">
+          $2,500 OFF Any Project Until End of Spring!
+        </div>
       </div>
 
       {/* Right Side - Quiz */}
