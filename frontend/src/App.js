@@ -18,13 +18,11 @@ const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e
 const PHONE_NUMBER = "+1 (817) 506-9696";
 const PHONE_NUMBER_RAW = "+18175069696";
 
-// DataLayer helper function
-const pushToDataLayer = (event, data = {}) => {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event,
-    ...data
-  });
+// Meta Pixel helper function
+const trackMetaEvent = (eventName, data = {}) => {
+  if (window.fbq) {
+    window.fbq('trackCustom', eventName, data);
+  }
 };
 
 const homeTypes = [
@@ -115,9 +113,8 @@ const LandingPage = () => {
           email: formData.email,
         });
         setQuizId(response.data.id);
-        // Push form_submit event to dataLayer
-        pushToDataLayer('form_submit', {
-          form_type: 'quiz',
+        // Track FormSubmit event in Meta Pixel
+        trackMetaEvent('FormSubmit', {
           home_type: formData.homeType,
           timeline: formData.timeline,
           city: formData.city,
@@ -156,8 +153,8 @@ const LandingPage = () => {
         city: formData.city,
         zipcode: formData.zipcode,
       });
-      // Push appointment_requested event to dataLayer
-      pushToDataLayer('appointment_requested', {
+      // Track AppointmentRequested event in Meta Pixel
+      trackMetaEvent('AppointmentRequested', {
         appointment_date: format(formData.appointmentDate, "yyyy-MM-dd"),
         appointment_time: formData.appointmentTime
       });
@@ -420,7 +417,7 @@ const LandingPage = () => {
                 Questions? Call us at <a 
                   href={`tel:${PHONE_NUMBER_RAW}`} 
                   className="text-brand-blue font-medium hover:underline"
-                  onClick={() => pushToDataLayer('phone_call_click', { location: 'confirmation_screen' })}
+                  onClick={() => trackMetaEvent('Call', { location: 'confirmation_screen' })}
                 >
                   {PHONE_NUMBER}
                 </a>
@@ -486,7 +483,7 @@ const LandingPage = () => {
               <a 
                 href={`tel:${PHONE_NUMBER_RAW}`} 
                 className="text-lg font-medium hover:text-brand-orange transition-colors"
-                onClick={() => pushToDataLayer('phone_call_click', { location: 'hero_section' })}
+                onClick={() => trackMetaEvent('Call', { location: 'hero_section' })}
               >
                 {PHONE_NUMBER}
               </a>
@@ -604,7 +601,7 @@ const LandingPage = () => {
       <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200 shadow-lg z-50">
         <a
           href={`tel:${PHONE_NUMBER_RAW}`}
-          onClick={() => pushToDataLayer('phone_call_click', { location: 'mobile_sticky_button' })}
+          onClick={() => trackMetaEvent('Call', { location: 'mobile_sticky_button' })}
           className="flex items-center justify-center gap-2 w-full h-14 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-lg font-bold text-lg transition-colors"
           data-testid="mobile-call-button"
         >
