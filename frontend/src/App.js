@@ -16,6 +16,16 @@ const API = `${BACKEND_URL}/api`;
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/7uksam1h_Untitled%20design%20%2862%29.png";
 const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBsdXh1cnklMjBiYXRocm9vbSUyMGludGVyaW9yfGVufDB8fHx8MTc3NDk5MTMyM3ww&ixlib=rb-4.1.0&q=85";
 const PHONE_NUMBER = "+1 (817) 506-9696";
+const PHONE_NUMBER_RAW = "+18175069696";
+
+// DataLayer helper function
+const pushToDataLayer = (event, data = {}) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event,
+    ...data
+  });
+};
 
 const homeTypes = [
   { id: "townhouse", label: "Townhouse/Duplex", icon: Building2 },
@@ -105,6 +115,14 @@ const LandingPage = () => {
           email: formData.email,
         });
         setQuizId(response.data.id);
+        // Push form_submit event to dataLayer
+        pushToDataLayer('form_submit', {
+          form_type: 'quiz',
+          home_type: formData.homeType,
+          timeline: formData.timeline,
+          city: formData.city,
+          zipcode: formData.zipcode
+        });
         toast.success("Information submitted! Now book your appointment.");
         setCurrentStep(5);
       } catch (error) {
@@ -134,6 +152,11 @@ const LandingPage = () => {
         full_name: formData.fullName,
         phone: formData.phone,
         email: formData.email,
+      });
+      // Push appointment_requested event to dataLayer
+      pushToDataLayer('appointment_requested', {
+        appointment_date: format(formData.appointmentDate, "yyyy-MM-dd"),
+        appointment_time: formData.appointmentTime
       });
       toast.success("Appointment booked successfully!");
       setCurrentStep(6); // Confirmation step
@@ -391,7 +414,13 @@ const LandingPage = () => {
                 We'll send a confirmation to <span className="font-medium">{formData.email}</span>
               </p>
               <p className="text-sm text-slate-600 mt-2">
-                Questions? Call us at <a href={`tel:+18175069696`} className="text-brand-blue font-medium hover:underline">{PHONE_NUMBER}</a>
+                Questions? Call us at <a 
+                  href={`tel:${PHONE_NUMBER_RAW}`} 
+                  className="text-brand-blue font-medium hover:underline"
+                  onClick={() => pushToDataLayer('phone_call_click', { location: 'confirmation_screen' })}
+                >
+                  {PHONE_NUMBER}
+                </a>
               </p>
             </div>
           </div>
@@ -451,7 +480,11 @@ const LandingPage = () => {
             
             <div className="flex items-center gap-3 text-white">
               <Phone className="w-5 h-5" />
-              <a href={`tel:+18175069696`} className="text-lg font-medium hover:text-brand-orange transition-colors">
+              <a 
+                href={`tel:${PHONE_NUMBER_RAW}`} 
+                className="text-lg font-medium hover:text-brand-orange transition-colors"
+                onClick={() => pushToDataLayer('phone_call_click', { location: 'hero_section' })}
+              >
                 {PHONE_NUMBER}
               </a>
             </div>
@@ -563,6 +596,22 @@ const LandingPage = () => {
         </div>
       </div>
       <Toaster position="top-center" richColors />
+      
+      {/* Mobile Sticky Call Button */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200 shadow-lg z-50">
+        <a
+          href={`tel:${PHONE_NUMBER_RAW}`}
+          onClick={() => pushToDataLayer('phone_call_click', { location: 'mobile_sticky_button' })}
+          className="flex items-center justify-center gap-2 w-full h-14 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-lg font-bold text-lg transition-colors"
+          data-testid="mobile-call-button"
+        >
+          <Phone className="w-5 h-5" />
+          Call Now: {PHONE_NUMBER}
+        </a>
+      </div>
+      
+      {/* Add padding at bottom on mobile for sticky button */}
+      <div className="md:hidden h-24" />
     </div>
   );
 };
