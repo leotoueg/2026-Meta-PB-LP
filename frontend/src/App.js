@@ -10,8 +10,9 @@ import { addDays, format, isBefore, startOfDay } from "date-fns";
 import { Home, Building2, Caravan, Building, Clock, CalendarDays, MapPin, User, Phone, Mail, ChevronRight, ChevronLeft, Check } from "lucide-react";
 import axios from "axios";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Webhook URLs - direct to GHL
+const FORM_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/qTrXc3AYUYHnooyh3gIB/webhook-trigger/fCZJpOlONsjTrtuPwSkb";
+const APPOINTMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/qTrXc3AYUYHnooyh3gIB/webhook-trigger/8M3hLvzm1kJ0qdTK2cXk";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/7uksam1h_Untitled%20design%20%2862%29.png";
 const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBsdXh1cnklMjBiYXRocm9vbSUyMGludGVyaW9yfGVufDB8fHx8MTc3NDk5MTMyM3ww&ixlib=rb-4.1.0&q=85";
@@ -99,10 +100,11 @@ const LandingPage = () => {
     if (!validateStep(currentStep)) return;
     
     if (currentStep === 4) {
-      // Submit quiz
+      // Submit quiz - send directly to webhook
       setIsSubmitting(true);
       try {
-        const response = await axios.post(`${API}/quiz/submit`, {
+        const quizData = {
+          id: crypto.randomUUID(),
           home_type: formData.homeType,
           timeline: formData.timeline,
           address: formData.address,
@@ -111,8 +113,12 @@ const LandingPage = () => {
           full_name: formData.fullName,
           phone: formData.phone,
           email: formData.email,
-        });
-        setQuizId(response.data.id);
+          timestamp: new Date().toISOString()
+        };
+        
+        await axios.post(FORM_WEBHOOK_URL, quizData);
+        setQuizId(quizData.id);
+        
         // Track FormSubmit event in Meta Pixel
         trackMetaEvent('FormSubmit', {
           home_type: formData.homeType,
@@ -142,7 +148,8 @@ const LandingPage = () => {
     
     setIsSubmitting(true);
     try {
-      await axios.post(`${API}/appointment/book`, {
+      const appointmentData = {
+        id: crypto.randomUUID(),
         quiz_id: quizId,
         date: format(formData.appointmentDate, "yyyy-MM-dd"),
         time: formData.appointmentTime,
@@ -152,7 +159,11 @@ const LandingPage = () => {
         address: formData.address,
         city: formData.city,
         zipcode: formData.zipcode,
-      });
+        timestamp: new Date().toISOString()
+      };
+      
+      await axios.post(APPOINTMENT_WEBHOOK_URL, appointmentData);
+      
       // Track AppointmentRequested event in Meta Pixel
       trackMetaEvent('AppointmentRequested', {
         appointment_date: format(formData.appointmentDate, "yyyy-MM-dd"),
