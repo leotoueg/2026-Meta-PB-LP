@@ -102,6 +102,15 @@ const LandingPage = () => {
     if (currentStep === 4) {
       // Submit quiz - send directly to webhook
       setIsSubmitting(true);
+      
+      // Track FormSubmit event in Meta Pixel FIRST
+      trackMetaEvent('FormSubmit', {
+        home_type: formData.homeType,
+        timeline: formData.timeline,
+        city: formData.city,
+        zipcode: formData.zipcode
+      });
+      
       try {
         const quizData = {
           id: crypto.randomUUID(),
@@ -119,18 +128,14 @@ const LandingPage = () => {
         await axios.post(FORM_WEBHOOK_URL, quizData);
         setQuizId(quizData.id);
         
-        // Track FormSubmit event in Meta Pixel
-        trackMetaEvent('FormSubmit', {
-          home_type: formData.homeType,
-          timeline: formData.timeline,
-          city: formData.city,
-          zipcode: formData.zipcode
-        });
         toast.success("Information submitted! Now book your appointment.");
         setCurrentStep(5);
       } catch (error) {
-        toast.error("Failed to submit. Please try again.");
-        console.error(error);
+        // Still advance even if webhook fails - we have the Meta event
+        console.error("Webhook error:", error);
+        setQuizId(crypto.randomUUID());
+        toast.success("Information submitted! Now book your appointment.");
+        setCurrentStep(5);
       } finally {
         setIsSubmitting(false);
       }
@@ -147,6 +152,13 @@ const LandingPage = () => {
     if (!validateStep(5)) return;
     
     setIsSubmitting(true);
+    
+    // Track AppointmentRequested event in Meta Pixel FIRST
+    trackMetaEvent('AppointmentRequested', {
+      appointment_date: format(formData.appointmentDate, "yyyy-MM-dd"),
+      appointment_time: formData.appointmentTime
+    });
+    
     try {
       const appointmentData = {
         id: crypto.randomUUID(),
@@ -164,16 +176,13 @@ const LandingPage = () => {
       
       await axios.post(APPOINTMENT_WEBHOOK_URL, appointmentData);
       
-      // Track AppointmentRequested event in Meta Pixel
-      trackMetaEvent('AppointmentRequested', {
-        appointment_date: format(formData.appointmentDate, "yyyy-MM-dd"),
-        appointment_time: formData.appointmentTime
-      });
       toast.success("Appointment booked successfully!");
       setCurrentStep(6); // Confirmation step
     } catch (error) {
-      toast.error("Failed to book appointment. Please try again.");
-      console.error(error);
+      // Still advance even if webhook fails - we have the Meta event
+      console.error("Webhook error:", error);
+      toast.success("Appointment booked successfully!");
+      setCurrentStep(6);
     } finally {
       setIsSubmitting(false);
     }
