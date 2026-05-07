@@ -188,13 +188,14 @@ const LandingPage = () => {
     }
   };
 
-  // Calendar date restrictions: only allow 5 days from today
+  // Calendar date restrictions: only allow 5 days from today, no Sundays
   const today = startOfDay(new Date());
   const maxDate = addDays(today, 5);
   
   const isDateDisabled = (date) => {
     const dateStart = startOfDay(date);
-    return isBefore(dateStart, today) || isBefore(maxDate, dateStart);
+    const isSunday = date.getDay() === 0;
+    return isBefore(dateStart, today) || isBefore(maxDate, dateStart) || isSunday;
   };
 
   const renderStep = () => {
