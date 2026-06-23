@@ -1,11 +1,11 @@
 import { useState } from "react";
-import "./App.css";
+import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from "./components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { Calendar } from "./components/ui/calendar";
-import { Input } from "./components/ui/input";
-import { Button } from "./components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { addDays, format, isBefore, startOfDay } from "date-fns";
 import { Home, Building2, Caravan, Building, Clock, MapPin, User, Phone, Mail, ChevronRight, ChevronLeft, Check } from "lucide-react";
 import axios from "axios";
