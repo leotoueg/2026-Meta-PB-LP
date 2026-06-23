@@ -485,7 +485,7 @@ const LandingPage = () => {
         <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-12">
           <div className="space-y-6">
             {/* Special Offer Badge */}
-            <div className="inline-block bg-brand-secondary text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg">
+            <div className="inline-block bg-brand-accent/80 text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg">
               $2,500 OFF Any Project Until End of Spring!
             </div>
             
@@ -536,14 +536,17 @@ const LandingPage = () => {
 
       {/* Mobile Header */}
       <div className="md:hidden bg-white border-b border-slate-200 p-4">
-        <img 
-          src={LOGO_URL} 
-          alt="Prime Baths of NM" 
-          className="h-16 w-auto object-contain mx-auto"
-          data-testid="company-logo-mobile"
-        />
+        <div className="overflow-hidden">
+          <img 
+            src={LOGO_URL} 
+            alt="Prime Baths of NM" 
+            className="h-16 w-auto object-contain object-top mx-auto"
+            style={{ clipPath: 'inset(0 0 12% 0)' }}
+            data-testid="company-logo-mobile"
+          />
+        </div>
         {/* Mobile Offer Banner */}
-        <div className="mt-3 bg-brand-secondary text-white text-center py-2 px-3 rounded-lg text-sm font-bold">
+        <div className="mt-3 bg-brand-accent/80 text-white text-center py-2 px-3 rounded-lg text-sm font-bold">
           $2,500 OFF Any Project Until End of Spring!
         </div>
       </div>
@@ -551,11 +554,12 @@ const LandingPage = () => {
       {/* Right Side - Quiz */}
       <div className="flex flex-col items-center justify-center p-4 md:p-8 lg:p-12">
         {/* Logo above quiz */}
-        <div className="mb-6 hidden md:block">
+        <div className="mb-6 hidden md:block overflow-hidden">
           <img 
             src={LOGO_URL} 
             alt="Prime Baths of NM" 
-            className="h-20 lg:h-24 w-auto object-contain"
+            className="h-20 lg:h-24 w-auto object-contain object-top"
+            style={{ clipPath: 'inset(0 0 12% 0)' }}
             data-testid="company-logo"
           />
         </div>
