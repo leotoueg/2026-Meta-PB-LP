@@ -1,0 +1,105 @@
+/* Custom brand colors */
+.bg-brand-blue {
+  background-color: #003A75;
+}
+
+.bg-brand-orange {
+  background-color: #FF6C00;
+}
+
+.text-brand-blue {
+  color: #003A75;
+}
+
+.text-brand-orange {
+  color: #FF6C00;
+}
+
+.border-brand-blue {
+  border-color: #003A75;
+}
+
+.border-brand-orange {
+  border-color: #FF6C00;
+}
+
+/* Focus states */
+.focus\:ring-brand-blue\/20:focus {
+  --tw-ring-color: rgba(0, 58, 117, 0.2);
+}
+
+.focus\:border-brand-blue:focus {
+  border-color: #003A75;
+}
+
+/* Hover states */
+.hover\:bg-brand-blue:hover {
+  background-color: #003A75;
+}
+
+.hover\:text-brand-orange:hover {
+  color: #FF6C00;
+}
+
+/* Shadow */
+.shadow-brand-orange\/20 {
+  --tw-shadow-color: rgba(255, 108, 0, 0.2);
+}
+
+/* Animation for smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Calendar custom styles */
+.rdp-day_selected:not([disabled]) {
+  background-color: #003A75 !important;
+}
+
+.rdp-day_today:not(.rdp-day_selected) {
+  background-color: rgba(255, 108, 0, 0.2) !important;
+  color: #FF6C00 !important;
+}
+
+/* Smooth page load animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.App {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Quiz card entrance animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Selection card hover effect */
+button:focus-visible {
+  outline: 2px solid #003A75;
+  outline-offset: 2px;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}

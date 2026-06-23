@@ -7,17 +7,17 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { addDays, format, isBefore, startOfDay } from "date-fns";
-import { Home, Building2, Caravan, Building, Clock, MapPin, User, Phone, Mail, ChevronRight, ChevronLeft, Check } from "lucide-react";
+import { Home, Building2, Caravan, Building, Clock, CalendarDays, MapPin, User, Phone, Mail, ChevronRight, ChevronLeft, Check } from "lucide-react";
 import axios from "axios";
 
 // Webhook URLs - direct to GHL
-const FORM_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/c9822925-d94f-4e69-9fb8-224d4b518265";
-const APPOINTMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/8b7b79c6-5e09-49ba-914d-eacbadc68dfa";
+const FORM_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/qTrXc3AYUYHnooyh3gIB/webhook-trigger/fCZJpOlONsjTrtuPwSkb";
+const APPOINTMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/qTrXc3AYUYHnooyh3gIB/webhook-trigger/8M3hLvzm1kJ0qdTK2cXk";
 
-const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/kxz48m28_pblogonobg.jpg";
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/7uksam1h_Untitled%20design%20%2862%29.png";
 const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBsdXh1cnklMjBiYXRocm9vbSUyMGludGVyaW9yfGVufDB8fHx8MTc3NDk5MTMyM3ww&ixlib=rb-4.1.0&q=85";
-const PHONE_NUMBER = "+1 (505) 472-7064";
-const PHONE_NUMBER_RAW = "+15054727064";
+const PHONE_NUMBER = "+1 (817) 506-9696";
+const PHONE_NUMBER_RAW = "+18175069696";
 
 // Meta Pixel helper function
 const trackMetaEvent = (eventName, data = {}) => {
@@ -40,17 +40,7 @@ const timelines = [
   { id: "unsure", label: "Unsure" },
 ];
 
-// Time slots vary by day: Mon-Thu: 10am, 2pm, 6pm; Fri-Sat: 10am, 2pm only
-const getTimeSlots = (date) => {
-  if (!date) return ["10:00 AM", "2:00 PM", "6:00 PM"];
-  const day = date.getDay();
-  // Friday (5) or Saturday (6)
-  if (day === 5 || day === 6) {
-    return ["10:00 AM", "2:00 PM"];
-  }
-  // Monday-Thursday
-  return ["10:00 AM", "2:00 PM", "6:00 PM"];
-};
+const timeSlots = ["10:00 AM", "2:00 PM", "6:00 PM"];
 
 const LandingPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -135,9 +125,7 @@ const LandingPage = () => {
           timestamp: new Date().toISOString()
         };
         
-        if (FORM_WEBHOOK_URL !== "WEBHOOK_URL_PLACEHOLDER") {
-          await axios.post(FORM_WEBHOOK_URL, quizData);
-        }
+        await axios.post(FORM_WEBHOOK_URL, quizData);
         setQuizId(quizData.id);
         
         toast.success("Information submitted! Now book your appointment.");
@@ -186,9 +174,7 @@ const LandingPage = () => {
         timestamp: new Date().toISOString()
       };
       
-      if (APPOINTMENT_WEBHOOK_URL !== "WEBHOOK_URL_PLACEHOLDER") {
-        await axios.post(APPOINTMENT_WEBHOOK_URL, appointmentData);
-      }
+      await axios.post(APPOINTMENT_WEBHOOK_URL, appointmentData);
       
       toast.success("Appointment booked successfully!");
       setCurrentStep(6); // Confirmation step
@@ -212,20 +198,13 @@ const LandingPage = () => {
     return isBefore(dateStart, today) || isBefore(maxDate, dateStart) || isSunday;
   };
 
-  // Reset time selection when date changes (in case time slots differ)
-  const handleDateSelect = (date) => {
-    setFormData({ ...formData, appointmentDate: date, appointmentTime: "" });
-  };
-
-  const timeSlots = getTimeSlots(formData.appointmentDate);
-
   const renderStep = () => {
     switch (currentStep) {
       case 1:
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-primary">Which best describes your home?</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">Which best describes your home?</h2>
               <p className="text-slate-500">Select the type of property for your remodel</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -239,12 +218,12 @@ const LandingPage = () => {
                     onClick={() => setFormData({ ...formData, homeType: type.id })}
                     className={`flex flex-col items-center justify-center p-6 border-2 rounded-lg cursor-pointer transition-all gap-3 ${
                       isSelected
-                        ? "border-brand-primary bg-brand-primary/5"
-                        : "border-slate-100 hover:border-brand-primary/30 hover:bg-slate-50"
+                        ? "border-brand-blue bg-brand-blue/5"
+                        : "border-slate-100 hover:border-brand-blue/30 hover:bg-slate-50"
                     }`}
                   >
-                    <Icon className={`w-10 h-10 ${isSelected ? "text-brand-primary" : "text-slate-400"}`} />
-                    <span className={`text-sm font-medium text-center ${isSelected ? "text-brand-primary" : "text-slate-700"}`}>
+                    <Icon className={`w-10 h-10 ${isSelected ? "text-brand-blue" : "text-slate-400"}`} />
+                    <span className={`text-sm font-medium text-center ${isSelected ? "text-brand-blue" : "text-slate-700"}`}>
                       {type.label}
                     </span>
                   </button>
@@ -259,7 +238,7 @@ const LandingPage = () => {
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-primary">When are you looking to start?</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">When are you looking to start?</h2>
               <p className="text-slate-500">Let us know your timeline</p>
             </div>
             <div className="space-y-3">
@@ -272,13 +251,13 @@ const LandingPage = () => {
                     onClick={() => setFormData({ ...formData, timeline: timeline.id })}
                     className={`w-full flex items-center p-5 border-2 rounded-lg cursor-pointer transition-all text-left text-lg font-medium ${
                       isSelected
-                        ? "border-brand-primary bg-brand-primary/5 text-brand-primary"
-                        : "border-slate-100 hover:border-brand-primary/30 hover:bg-slate-50 text-slate-700"
+                        ? "border-brand-blue bg-brand-blue/5 text-brand-blue"
+                        : "border-slate-100 hover:border-brand-blue/30 hover:bg-slate-50 text-slate-700"
                     }`}
                   >
-                    <Clock className={`w-5 h-5 mr-3 ${isSelected ? "text-brand-primary" : "text-slate-400"}`} />
+                    <Clock className={`w-5 h-5 mr-3 ${isSelected ? "text-brand-blue" : "text-slate-400"}`} />
                     {timeline.label}
-                    {isSelected && <Check className="w-5 h-5 ml-auto text-brand-primary" />}
+                    {isSelected && <Check className="w-5 h-5 ml-auto text-brand-blue" />}
                   </button>
                 );
               })}
@@ -291,7 +270,7 @@ const LandingPage = () => {
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-primary">What is the address of the property?</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">What is the address of the property?</h2>
               <p className="text-slate-500">Enter the location for the remodel</p>
             </div>
             <div className="space-y-4">
@@ -303,7 +282,7 @@ const LandingPage = () => {
                     placeholder="Home Address"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
+                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
                   />
                 </div>
                 {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
@@ -315,7 +294,7 @@ const LandingPage = () => {
                     placeholder="City"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
+                    className="h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
                   />
                   {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                 </div>
@@ -325,7 +304,7 @@ const LandingPage = () => {
                     placeholder="Zipcode"
                     value={formData.zipcode}
                     onChange={(e) => setFormData({ ...formData, zipcode: e.target.value })}
-                    className="h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
+                    className="h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
                   />
                   {errors.zipcode && <p className="text-red-500 text-sm mt-1">{errors.zipcode}</p>}
                 </div>
@@ -338,7 +317,7 @@ const LandingPage = () => {
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-primary">How can we contact you?</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">How can we contact you?</h2>
               <p className="text-slate-500">We'll reach out to confirm your estimate</p>
             </div>
             <div className="space-y-4">
@@ -350,7 +329,7 @@ const LandingPage = () => {
                     placeholder="Full Name"
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
+                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
                   />
                 </div>
                 {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
@@ -364,7 +343,7 @@ const LandingPage = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
+                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
                   />
                 </div>
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -378,7 +357,7 @@ const LandingPage = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
+                    className="pl-10 h-12 rounded-lg border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
                   />
                 </div>
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -391,7 +370,7 @@ const LandingPage = () => {
         return (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-primary">Wait! You're almost done</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">Wait! You're almost done</h2>
               <p className="text-slate-500">Select a date and time for your free estimate</p>
             </div>
             <div className="flex flex-col items-center space-y-6">
@@ -399,19 +378,19 @@ const LandingPage = () => {
                 data-testid="appointment-calendar"
                 mode="single"
                 selected={formData.appointmentDate}
-                onSelect={handleDateSelect}
+                onSelect={(date) => setFormData({ ...formData, appointmentDate: date })}
                 disabled={isDateDisabled}
                 className="rounded-lg border border-slate-200"
                 classNames={{
-                  day_selected: "bg-brand-primary text-white hover:bg-brand-primary hover:text-white focus:bg-brand-primary focus:text-white",
-                  day_today: "bg-brand-secondary/20 text-brand-secondary font-bold",
+                  day_selected: "bg-brand-blue text-white hover:bg-brand-blue hover:text-white focus:bg-brand-blue focus:text-white",
+                  day_today: "bg-brand-orange/20 text-brand-orange font-bold",
                 }}
               />
               {errors.appointmentDate && <p className="text-red-500 text-sm">{errors.appointmentDate}</p>}
               
               <div className="w-full space-y-3">
                 <p className="text-sm font-medium text-slate-700 text-center">Select a time slot:</p>
-                <div className={`grid gap-3 ${timeSlots.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                <div className="grid grid-cols-3 gap-3">
                   {timeSlots.map((time) => {
                     const isSelected = formData.appointmentTime === time;
                     return (
@@ -421,8 +400,8 @@ const LandingPage = () => {
                         onClick={() => setFormData({ ...formData, appointmentTime: time })}
                         className={`p-3 rounded-lg border-2 font-medium transition-all ${
                           isSelected
-                            ? "border-brand-primary bg-brand-primary text-white"
-                            : "border-slate-200 hover:border-brand-primary/30 text-slate-700"
+                            ? "border-brand-blue bg-brand-blue text-white"
+                            : "border-slate-200 hover:border-brand-blue/30 text-slate-700"
                         }`}
                       >
                         {time}
@@ -443,7 +422,7 @@ const LandingPage = () => {
               <Check className="w-10 h-10 text-green-600" />
             </div>
             <div className="space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-brand-primary">Appointment Confirmed!</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-brand-blue">Appointment Confirmed!</h2>
               <p className="text-slate-500">
                 Your free estimate is scheduled for<br />
                 <span className="font-semibold text-slate-700">
@@ -458,7 +437,7 @@ const LandingPage = () => {
               <p className="text-sm text-slate-600 mt-2">
                 Questions? Call us at <a 
                   href={`tel:${PHONE_NUMBER_RAW}`} 
-                  className="text-brand-primary font-medium hover:underline"
+                  className="text-brand-blue font-medium hover:underline"
                   onClick={() => trackMetaEvent('Call', { location: 'confirmation_screen' })}
                 >
                   {PHONE_NUMBER}
@@ -481,17 +460,17 @@ const LandingPage = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${HERO_IMAGE})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/90 to-brand-primary/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/90 to-brand-blue/70" />
         <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-12">
           <div className="space-y-6">
             {/* Special Offer Badge */}
-            <div className="inline-block bg-brand-secondary text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg">
+            <div className="inline-block bg-brand-orange text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg">
               $2,500 OFF Any Project Until End of Spring!
             </div>
             
             <h1 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
               Full Bathroom Remodels in<br />
-              <span className="text-brand-accent">New Mexico</span>
+              <span className="text-brand-orange">North Central Texas & Surrounding Areas</span>
             </h1>
             <p className="text-white/80 text-lg max-w-md">
               Over 50 years of combined experience delivering exceptional bathroom remodeling services.
@@ -502,19 +481,19 @@ const LandingPage = () => {
               <p className="text-white/60 text-sm uppercase tracking-wider font-medium">Services:</p>
               <ul className="space-y-1 text-white/90">
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
+                  <span className="w-1.5 h-1.5 bg-brand-orange rounded-full"></span>
                   Full Bathroom Remodels
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
+                  <span className="w-1.5 h-1.5 bg-brand-orange rounded-full"></span>
                   Tub to Shower Conversion
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
+                  <span className="w-1.5 h-1.5 bg-brand-orange rounded-full"></span>
                   Shower to Tub Conversion
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-brand-accent rounded-full"></span>
+                  <span className="w-1.5 h-1.5 bg-brand-orange rounded-full"></span>
                   Walk-in Tub
                 </li>
               </ul>
@@ -524,7 +503,7 @@ const LandingPage = () => {
               <Phone className="w-5 h-5" />
               <a 
                 href={`tel:${PHONE_NUMBER_RAW}`} 
-                className="text-lg font-medium hover:text-brand-accent transition-colors"
+                className="text-lg font-medium hover:text-brand-orange transition-colors"
                 onClick={() => trackMetaEvent('Call', { location: 'hero_section' })}
               >
                 {PHONE_NUMBER}
@@ -538,12 +517,12 @@ const LandingPage = () => {
       <div className="md:hidden bg-white border-b border-slate-200 p-4">
         <img 
           src={LOGO_URL} 
-          alt="Prime Baths of NM" 
+          alt="Apex Bath Remodeling & Pros" 
           className="h-16 w-auto object-contain mx-auto"
           data-testid="company-logo-mobile"
         />
         {/* Mobile Offer Banner */}
-        <div className="mt-3 bg-brand-secondary text-white text-center py-2 px-3 rounded-lg text-sm font-bold">
+        <div className="mt-3 bg-brand-orange text-white text-center py-2 px-3 rounded-lg text-sm font-bold">
           $2,500 OFF Any Project Until End of Spring!
         </div>
       </div>
@@ -554,7 +533,7 @@ const LandingPage = () => {
         <div className="mb-6 hidden md:block">
           <img 
             src={LOGO_URL} 
-            alt="Prime Baths of NM" 
+            alt="Apex Bath Remodeling & Pros" 
             className="h-20 lg:h-24 w-auto object-contain"
             data-testid="company-logo"
           />
@@ -564,7 +543,7 @@ const LandingPage = () => {
           {currentStep <= 5 && (
             <div className="h-1.5 bg-slate-100">
               <div 
-                className="h-full bg-brand-secondary transition-all duration-500 ease-out"
+                className="h-full bg-brand-orange transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
                 data-testid="progress-bar"
               />
@@ -592,7 +571,7 @@ const LandingPage = () => {
                 <Button
                   onClick={currentStep === 5 ? handleBookAppointment : handleNext}
                   disabled={isSubmitting}
-                  className="flex-1 h-14 bg-brand-secondary hover:bg-brand-secondary/90 text-white rounded-lg font-bold text-lg transition-colors shadow-lg shadow-brand-secondary/20"
+                  className="flex-1 h-14 bg-brand-orange hover:bg-[#E56000] text-white rounded-lg font-bold text-lg transition-colors shadow-lg shadow-brand-orange/20"
                   data-testid={currentStep === 5 ? "book-appointment-button" : "next-button"}
                 >
                   {isSubmitting ? (
@@ -625,9 +604,9 @@ const LandingPage = () => {
                     key={step}
                     className={`w-2 h-2 rounded-full transition-colors ${
                       step === currentStep
-                        ? "bg-brand-primary"
+                        ? "bg-brand-blue"
                         : step < currentStep
-                        ? "bg-brand-secondary"
+                        ? "bg-brand-orange"
                         : "bg-slate-200"
                     }`}
                   />
@@ -644,7 +623,7 @@ const LandingPage = () => {
         <a
           href={`tel:${PHONE_NUMBER_RAW}`}
           onClick={() => trackMetaEvent('Call', { location: 'mobile_sticky_button' })}
-          className="flex items-center justify-center gap-2 w-full h-14 bg-brand-primary hover:bg-brand-primary/90 text-white rounded-lg font-bold text-lg transition-colors"
+          className="flex items-center justify-center gap-2 w-full h-14 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-lg font-bold text-lg transition-colors"
           data-testid="mobile-call-button"
         >
           <Phone className="w-5 h-5" />
