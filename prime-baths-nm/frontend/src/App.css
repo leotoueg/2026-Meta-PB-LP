@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Brand colors for Prime Baths of NM */
+.bg-brand-primary {
+  background-color: #1E4C9A;
+}
+
+.bg-brand-secondary {
+  background-color: #657896;
+}
+
+.bg-brand-accent {
+  background-color: #657896;
+}
+
+.text-brand-primary {
+  color: #1E4C9A;
+}
+
+.text-brand-secondary {
+  color: #657896;
+}
+
+.text-brand-accent {
+  color: #657896;
+}
+
+.border-brand-primary {
+  border-color: #1E4C9A;
+}
+
+.border-brand-secondary {
+  border-color: #657896;
+}
+
+/* Focus states */
+.focus\:ring-brand-primary\/20:focus {
+  --tw-ring-color: rgba(30, 76, 154, 0.2);
+}
+
+.focus\:border-brand-primary:focus {
+  border-color: #1E4C9A;
+}
+
+/* Hover states */
+.hover\:bg-brand-primary:hover {
+  background-color: #1E4C9A;
+}
+
+.hover\:bg-brand-primary\/90:hover {
+  background-color: rgba(30, 76, 154, 0.9);
+}
+
+.hover\:bg-brand-secondary\/90:hover {
+  background-color: rgba(101, 120, 150, 0.9);
+}
+
+.hover\:text-brand-accent:hover {
+  color: #657896;
+}
+
+/* Shadow */
+.shadow-brand-secondary\/20 {
+  --tw-shadow-color: rgba(101, 120, 150, 0.2);
+}
+
+/* Animation for smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Calendar custom styles */
+.rdp-day_selected:not([disabled]) {
+  background-color: #1E4C9A !important;
+}
+
+.rdp-day_today:not(.rdp-day_selected) {
+  background-color: rgba(101, 120, 150, 0.2) !important;
+  color: #657896 !important;
+}
+
+/* Smooth page load animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.App {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Selection card hover effect */
+button:focus-visible {
+  outline: 2px solid #1E4C9A;
+  outline-offset: 2px;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}
