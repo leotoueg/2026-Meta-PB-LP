@@ -14,7 +14,7 @@ import axios from "axios";
 const FORM_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/c9822925-d94f-4e69-9fb8-224d4b518265";
 const APPOINTMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/8b7b79c6-5e09-49ba-914d-eacbadc68dfa";
 
-const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/kxz48m28_pblogonobg.jpg";
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/2sc4n6cn_pblogonobg.png";
 const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBsdXh1cnklMjBiYXRocm9vbSUyMGludGVyaW9yfGVufDB8fHx8MTc3NDk5MTMyM3ww&ixlib=rb-4.1.0&q=85";
 const PHONE_NUMBER = "+1 (505) 472-7064";
 const PHONE_NUMBER_RAW = "+15054727064";
@@ -485,13 +485,13 @@ const LandingPage = () => {
         <div className="absolute inset-0 flex flex-col justify-end p-8 lg:p-12">
           <div className="space-y-6">
             {/* Special Offer Badge */}
-            <div className="inline-block bg-brand-accent/80 text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg">
+            <div className="inline-block text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg" style={{ backgroundColor: '#34BCFF' }}>
               $2,500 OFF Any Project Until End of Spring!
             </div>
             
             <h1 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
               Full Bathroom Remodels in<br />
-              <span className="text-brand-accent">New Mexico</span>
+              <span style={{ color: '#34BCFF' }}>New Mexico</span>
             </h1>
             <p className="text-white/80 text-lg max-w-md">
               Over 50 years of combined experience delivering exceptional bathroom remodeling services.
@@ -536,17 +536,14 @@ const LandingPage = () => {
 
       {/* Mobile Header */}
       <div className="md:hidden bg-white border-b border-slate-200 p-4">
-        <div className="overflow-hidden">
-          <img 
-            src={LOGO_URL} 
-            alt="Prime Baths of NM" 
-            className="h-16 w-auto object-contain object-top mx-auto"
-            style={{ clipPath: 'inset(0 0 12% 0)' }}
-            data-testid="company-logo-mobile"
-          />
-        </div>
+        <img 
+          src={LOGO_URL} 
+          alt="Prime Baths of NM" 
+          className="h-16 w-auto object-contain mx-auto"
+          data-testid="company-logo-mobile"
+        />
         {/* Mobile Offer Banner */}
-        <div className="mt-3 bg-brand-accent/80 text-white text-center py-2 px-3 rounded-lg text-sm font-bold">
+        <div className="mt-3 text-white text-center py-2 px-3 rounded-lg text-sm font-bold" style={{ backgroundColor: '#34BCFF' }}>
           $2,500 OFF Any Project Until End of Spring!
         </div>
       </div>
@@ -554,12 +551,11 @@ const LandingPage = () => {
       {/* Right Side - Quiz */}
       <div className="flex flex-col items-center justify-center p-4 md:p-8 lg:p-12">
         {/* Logo above quiz */}
-        <div className="mb-6 hidden md:block overflow-hidden">
+        <div className="mb-6 hidden md:block">
           <img 
             src={LOGO_URL} 
             alt="Prime Baths of NM" 
-            className="h-20 lg:h-24 w-auto object-contain object-top"
-            style={{ clipPath: 'inset(0 0 12% 0)' }}
+            className="h-20 lg:h-24 w-auto object-contain"
             data-testid="company-logo"
           />
         </div>
