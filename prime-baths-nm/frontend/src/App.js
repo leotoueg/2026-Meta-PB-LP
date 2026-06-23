@@ -10,14 +10,14 @@ import { addDays, format, isBefore, startOfDay } from "date-fns";
 import { Home, Building2, Caravan, Building, Clock, MapPin, User, Phone, Mail, ChevronRight, ChevronLeft, Check } from "lucide-react";
 import axios from "axios";
 
-// Webhook URLs - direct to GHL (to be configured)
-const FORM_WEBHOOK_URL = "WEBHOOK_URL_PLACEHOLDER";
-const APPOINTMENT_WEBHOOK_URL = "WEBHOOK_URL_PLACEHOLDER";
+// Webhook URLs - direct to GHL
+const FORM_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/c9822925-d94f-4e69-9fb8-224d4b518265";
+const APPOINTMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/8b7b79c6-5e09-49ba-914d-eacbadc68dfa";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/kxz48m28_pblogonobg.jpg";
 const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBsdXh1cnklMjBiYXRocm9vbSUyMGludGVyaW9yfGVufDB8fHx8MTc3NDk5MTMyM3ww&ixlib=rb-4.1.0&q=85";
-const PHONE_NUMBER = "PHONE_PLACEHOLDER";
-const PHONE_NUMBER_RAW = "PHONE_PLACEHOLDER_RAW";
+const PHONE_NUMBER = "+1 (505) 472-7064";
+const PHONE_NUMBER_RAW = "+15054727064";
 
 // Meta Pixel helper function
 const trackMetaEvent = (eventName, data = {}) => {
