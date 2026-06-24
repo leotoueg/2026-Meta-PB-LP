@@ -19,10 +19,10 @@ const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e
 const PHONE_NUMBER = "+1 (505) 472-7064";
 const PHONE_NUMBER_RAW = "+15054727064";
 
-// Meta Pixel helper function
+// Meta Pixel helper function - using standard events
 const trackMetaEvent = (eventName, data = {}) => {
   if (window.fbq) {
-    window.fbq('trackCustom', eventName, data);
+    window.fbq('track', eventName, data);
   }
 };
 
@@ -113,8 +113,8 @@ const LandingPage = () => {
       // Submit quiz - send directly to webhook
       setIsSubmitting(true);
       
-      // Track FormSubmit event in Meta Pixel FIRST
-      trackMetaEvent('FormSubmit', {
+      // Track Lead event in Meta Pixel FIRST
+      trackMetaEvent('Lead', {
         home_type: formData.homeType,
         timeline: formData.timeline,
         city: formData.city,
@@ -165,8 +165,8 @@ const LandingPage = () => {
     
     setIsSubmitting(true);
     
-    // Track AppointmentRequested event in Meta Pixel FIRST
-    trackMetaEvent('AppointmentRequested', {
+    // Track Schedule event in Meta Pixel FIRST
+    trackMetaEvent('Schedule', {
       appointment_date: format(formData.appointmentDate, "yyyy-MM-dd"),
       appointment_time: formData.appointmentTime
     });
@@ -459,7 +459,7 @@ const LandingPage = () => {
                 Questions? Call us at <a 
                   href={`tel:${PHONE_NUMBER_RAW}`} 
                   className="text-brand-primary font-medium hover:underline"
-                  onClick={() => trackMetaEvent('Call', { location: 'confirmation_screen' })}
+                  onClick={() => trackMetaEvent('Contact', { location: 'confirmation_screen' })}
                 >
                   {PHONE_NUMBER}
                 </a>
@@ -525,7 +525,7 @@ const LandingPage = () => {
               <a 
                 href={`tel:${PHONE_NUMBER_RAW}`} 
                 className="text-lg font-medium hover:text-brand-accent transition-colors"
-                onClick={() => trackMetaEvent('Call', { location: 'hero_section' })}
+                onClick={() => trackMetaEvent('Contact', { location: 'hero_section' })}
               >
                 {PHONE_NUMBER}
               </a>
@@ -643,7 +643,7 @@ const LandingPage = () => {
       <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200 shadow-lg z-50">
         <a
           href={`tel:${PHONE_NUMBER_RAW}`}
-          onClick={() => trackMetaEvent('Call', { location: 'mobile_sticky_button' })}
+          onClick={() => trackMetaEvent('Contact', { location: 'mobile_sticky_button' })}
           className="flex items-center justify-center gap-2 w-full h-14 bg-brand-primary hover:bg-brand-primary/90 text-white rounded-lg font-bold text-lg transition-colors"
           data-testid="mobile-call-button"
         >
