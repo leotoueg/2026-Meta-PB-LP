@@ -486,7 +486,7 @@ const LandingPage = () => {
           <div className="space-y-6">
             {/* Special Offer Badge */}
             <div className="inline-block text-white px-4 py-2 rounded-lg font-bold text-lg shadow-lg" style={{ backgroundColor: '#34BCFF' }}>
-              $2,500 OFF Any Project Until End of Spring!
+              $1,500 OFF Any Project Until End of Spring!
             </div>
             
             <h1 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
@@ -544,7 +544,7 @@ const LandingPage = () => {
         />
         {/* Mobile Offer Banner */}
         <div className="mt-3 text-white text-center py-2 px-3 rounded-lg text-sm font-bold" style={{ backgroundColor: '#34BCFF' }}>
-          $2,500 OFF Any Project Until End of Spring!
+          $1,500 OFF Any Project Until End of Spring!
         </div>
       </div>
 
