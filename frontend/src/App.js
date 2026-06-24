@@ -21,8 +21,12 @@ const PHONE_NUMBER_RAW = "+15054727064";
 
 // Meta Pixel helper function - using standard events
 const trackMetaEvent = (eventName, data = {}) => {
+  console.log('Attempting to fire Meta event:', eventName, data);
   if (window.fbq) {
     window.fbq('track', eventName, data);
+    console.log('Meta event fired successfully:', eventName);
+  } else {
+    console.error('fbq not found - Meta Pixel not loaded');
   }
 };
 
