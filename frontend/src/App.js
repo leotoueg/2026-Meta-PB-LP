@@ -44,15 +44,15 @@ const timelines = [
   { id: "unsure", label: "Unsure" },
 ];
 
-// Time slots vary by day: Mon-Thu: 10am, 2pm, 6pm; Fri-Sat: 10am, 2pm only
+// Time slots vary by day: Mon-Fri: 10am, 2pm, 6pm; Sat: 10am, 2pm; Sun: closed
 const getTimeSlots = (date) => {
   if (!date) return ["10:00 AM", "2:00 PM", "6:00 PM"];
   const day = date.getDay();
-  // Friday (5) or Saturday (6)
-  if (day === 5 || day === 6) {
+  // Saturday (6)
+  if (day === 6) {
     return ["10:00 AM", "2:00 PM"];
   }
-  // Monday-Thursday
+  // Monday-Friday (1-5)
   return ["10:00 AM", "2:00 PM", "6:00 PM"];
 };
 
@@ -405,10 +405,25 @@ const LandingPage = () => {
                 selected={formData.appointmentDate}
                 onSelect={handleDateSelect}
                 disabled={isDateDisabled}
-                className="rounded-lg border border-slate-200"
-                classNames={{
-                  day_selected: "bg-brand-primary text-white hover:bg-brand-primary hover:text-white focus:bg-brand-primary focus:text-white",
-                  day_today: "bg-brand-secondary/20 text-brand-secondary font-bold",
+                className="rounded-lg border border-slate-200 p-3"
+                styles={{
+                  day: { margin: '2px' },
+                }}
+                modifiersStyles={{
+                  selected: { 
+                    backgroundColor: '#1E4C9A', 
+                    color: 'white',
+                    fontWeight: 'bold'
+                  },
+                  today: { 
+                    backgroundColor: '#34BCFF33',
+                    color: '#1E4C9A',
+                    fontWeight: 'bold'
+                  },
+                  disabled: {
+                    color: '#ccc',
+                    opacity: 0.5
+                  }
                 }}
               />
               {errors.appointmentDate && <p className="text-red-500 text-sm">{errors.appointmentDate}</p>}
