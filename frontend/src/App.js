@@ -12,7 +12,7 @@ import axios from "axios";
 
 // Webhook URLs - direct to GHL
 const FORM_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/c9822925-d94f-4e69-9fb8-224d4b518265";
-const APPOINTMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/8b7b79c6-5e09-49ba-914d-eacbadc68dfa";
+const APPOINTMENT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/ejeOEWkR6MEM49HF2Eqp/webhook-trigger/7f134bf8-ccf6-49b1-a059-9706ac07a796";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_home-assessment-2/artifacts/2sc4n6cn_pblogonobg.png";
 const HERO_IMAGE = "https://images.unsplash.com/photo-1750036015902-c6f5ebca924e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBsdXh1cnklMjBiYXRocm9vbSUyMGludGVyaW9yfGVufDB8fHx8MTc3NDk5MTMyM3ww&ixlib=rb-4.1.0&q=85";
